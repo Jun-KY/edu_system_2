@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${teacher.id} == null ? '➕ Register Teacher' : '✏️ Edit Teacher'"></title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body>
+<h1 th:text="${teacher.id} == null ? '➕ Register Teacher' : ' ✏️Edit Teacher'"></h1>
+<p>
+    <a href="/"> Home</a>
+    <a href="/teachers"> Teacher list</a>
+</p>
+<form th:action="${teacher.id} == null ? @{/teachers/add} : @{/teachers/edit}" th:object="${teacher}" method="post">
+    <input type="hidden" th:field="*{id}">
+
+    <p><label>Name: <input type="text" th:field="*{name}" required/></label></p>
+
+    <div class="button-row">
+        <button type="submit">Save</button>
+        <a href="/teachers" class="cancel">Cancel</a>
+
+        <!-- Only show Delete if editing (id exists) -->
+        <button type="submit" class="delete"
+                th:formaction="@{'/teachers/delete/' + ${teacher.id}}"
+                th:if="${teacher.id != null}">
+            Delete
+        </button>
+    </div>
+</form>
+</body>
+</html>
