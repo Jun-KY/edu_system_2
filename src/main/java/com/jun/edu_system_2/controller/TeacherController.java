@@ -14,7 +14,7 @@ public class TeacherController {
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("teachers", teacherRepository.finaAll());
+        model.addAttribute("teachers", teacherRepository.findAll());
 
         return "teacher-list";
     }
@@ -47,7 +47,14 @@ public class TeacherController {
 
     @PostMapping("/delete/{id}")
     public String deleteMemo(@PathVariable int id) {
-        teacherRepository.deleteById(id);
+        try{
+            int affected = teacherRepository.deleteById(id);
+            if (affected == 0) {
+                System.out.println("Cannot find Teacher");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         return "redirect:/teachers";
     }

@@ -21,7 +21,7 @@ public class TeacherRepository {
             .id(resultSet.getInt("id"))
             .name(resultSet.getString("name")).build();
 
-    public List<Teacher> finaAll(){
+    public List<Teacher> findAll(){
         return jdbcTemplate.query("SELECT * FROM teacher ORDER BY name", mapper);
     }
 
